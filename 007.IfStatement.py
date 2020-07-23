@@ -10,5 +10,3 @@ elif a >= 18:
     print("Adult")
 else:
     print("Error!")
-
-
