@@ -7,4 +7,4 @@ def normalize(x):
 
 L1 = ['adam', 'LISA', 'barT']
 L2 = list(map(normalize, L1))
-print(L2)
+print(L2)  # Result : ['Adam', 'Lisa', 'Bart']
