@@ -1,3 +1,6 @@
+# Create normalize() function to format the username like this:
+# ['Adam', 'Lisa', 'Bart']
+
 def normalize(x):
     x = x.lower()
     firstChar = ord(x[0])

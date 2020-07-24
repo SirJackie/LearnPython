@@ -1,3 +1,5 @@
+# Create str2float() function to convert string into float
+
 from functools import reduce
 
 def spliter(s):

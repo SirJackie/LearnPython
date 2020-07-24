@@ -1,3 +1,5 @@
+# Create prod() function to calculate the product of all numbers inside list
+
 from functools import reduce
 
 def multiply(x, y):
