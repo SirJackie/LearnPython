@@ -6,18 +6,18 @@ def trim(s):
     return s
 
 
-# 测试:
+# Test:
 if trim('hello  ') != 'hello':
-    print('测试失败!')
+    print('Rejected')
 elif trim('  hello') != 'hello':
-    print('测试失败!')
+    print('Rejected')
 elif trim('  hello  ') != 'hello':
-    print('测试失败!')
+    print('Rejected')
 elif trim('  hello  world  ') != 'hello  world':
-    print('测试失败!')
+    print('Rejected')
 elif trim('') != '':
-    print('测试失败!')
+    print('Rejected')
 elif trim('    ') != '':
-    print('测试失败!')
+    print('Rejected')
 else:
-    print('测试成功!')
+    print('Accepted')
