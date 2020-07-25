@@ -9,7 +9,7 @@ def metric(fn):
         return returnValue
     return wrapper
 
-# 测试
+# Test
 @metric
 def fast(x, y):
     time.sleep(0.0012)
