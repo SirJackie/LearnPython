@@ -22,8 +22,9 @@ def log(func):
     def wrapper(*args, **kw):
         print("Call %s:" % func.__name__)
         print("Begin!")
-        func(*args, **kw)
+        returnValue = func(*args, **kw)
         print("End!")
+        return returnValue
     return wrapper
 
 
@@ -53,8 +54,9 @@ def log(text="Call"):
         def wrapper(*args, **kw):
             print("%s %s" % (text, func.__name__))
             print("Begin!")
-            func(*args, **kw)
+            returnValue = func(*args, **kw)
             print("End!")
+            return returnValue
         return wrapper
     return decorator
 
@@ -99,8 +101,9 @@ def log(text="Call"):
         def wrapper(*args, **kw):
             print("%s %s" % (text, func.__name__))
             print("Begin!")
-            func(*args, **kw)
+            returnValue = func(*args, **kw)
             print("End!")
+            return returnValue
         return wrapper
     return decorator
 
