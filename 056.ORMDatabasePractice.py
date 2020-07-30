@@ -15,26 +15,66 @@ class IntegerField(Field):
         super().__init__(name, 'bigint')
 
 class ModelMetaclass(type):
-
     def __new__(cls, name, bases, attrs):
-        if name=='Model':
+
+        #
+        # Skip the Change to Class "Model"
+        #
+
+        # If the New Class is "Model" , do nothing
+        if name == 'Model':
             return type.__new__(cls, name, bases, attrs)
+
+        # Else , print the Class Name
         print('Found model: %s' % name)
+
+
+        #
+        # Copy all "Field" Properties to variable "mapping"
+        #
+
+        # Create a empty Dict called "mappings"
         mappings = dict()
-        for k, v in attrs.items():
-            if isinstance(v, Field):
-                print('Found mapping: %s ==> %s' % (k, v))
-                mappings[k] = v
+
+        # Iterate all the Properties in this Class
+        for key, value in attrs.items():
+
+            # If this Property is a instance inherit form "Field"
+            if isinstance(value, Field):
+
+                # Print out the name and value of this Property
+                print('Found mapping: %s ==> %s' % (key, value))
+
+                # Add this Property to Dict "mapping"
+                mappings[key] = value
+
+
+        #
+        # Delete all "Field" Properties from this class
+        #
+
+        # Iterate all keys inside mapping (which is the "Field" Properties)
         for k in mappings.keys():
+
+            # Delete it from this class
             attrs.pop(k)
-        attrs['__mappings__'] = mappings # 保存属性和列的映射关系
-        attrs['__table__'] = name # 假设表名和类名一致
+
+
+        #
+        # Saving All the Things
+        #
+
+        # Save all "Field" Properties to a Property "__mappings__"
+        # Inside this Class
+        attrs['__mappings__'] = mappings
+
+        # Save the Class Name as the Table name
+        attrs['__table__'] = name
+
+        # Return the changed class
         return type.__new__(cls, name, bases, attrs)
 
 class Model(dict, metaclass=ModelMetaclass):
-    def __init__(self, **kw):
-        super(Model, self).__init__(**kw)
-
     def __getattr__(self, key):
         try:
             return self[key]
