@@ -1,9 +1,14 @@
+#
+# Create Fields
+#
+
 class Field(object):
     def __init__(self, name, column_type):
         self.name = name
         self.column_type = column_type
 
     def __str__(self):
+        # Return the Type of Field and the Name of Field
         return '<%s:%s>' % (self.__class__.__name__, self.name)
 
 class StringField(Field):
@@ -14,9 +19,13 @@ class IntegerField(Field):
     def __init__(self, name):
         super().__init__(name, 'bigint')
 
+
+#
+# Define Metaclass for all Classes inherit from "Model"
+#
+
 class ModelMetaclass(type):
     def __new__(cls, name, bases, attrs):
-
         #
         # Skip the Change to Class "Model"
         #
@@ -65,7 +74,7 @@ class ModelMetaclass(type):
         #
 
         # Save all "Field" Properties to a Property "__mappings__"
-        # Inside this Class
+        # inside this Class
         attrs['__mappings__'] = mappings
 
         # Save the Class Name as the Table name
@@ -74,17 +83,34 @@ class ModelMetaclass(type):
         # Return the changed class
         return type.__new__(cls, name, bases, attrs)
 
+
+#
+# Define Model as a Class Inherit From Dict (!!!important)
+#
+
 class Model(dict, metaclass=ModelMetaclass):
+
+    def __init__(self, **kw):
+        # Throw all the Keyword Arguments to Base Class "dict"
+        super().__init__(**kw)
+
     def __getattr__(self, key):
         try:
+            # Try to Return the Keyword Value From "dict"
             return self[key]
         except KeyError:
             raise AttributeError(r"'Model' object has no attribute '%s'" % key)
 
     def __setattr__(self, key, value):
+        # Put the value into "dict"
         self[key] = value
 
     def save(self):
+
+        #
+        # Generate SQL Command
+        #
+
         fields = []
         params = []
         args = []
@@ -104,3 +130,13 @@ class User(Model):
 
 u = User(id=12345, name='Michael', email='test@orm.org', password='my-pwd')
 u.save()
+
+
+# Result :
+# Found model: User
+# Found mapping: id ==> <IntegerField:id>
+# Found mapping: name ==> <StringField:username>
+# Found mapping: email ==> <StringField:email>
+# Found mapping: password ==> <StringField:password>
+# SQL: insert into User (id,username,email,password) values (?,?,?,?)
+# ARGS: [12345, 'Michael', 'test@orm.org', 'my-pwd']
