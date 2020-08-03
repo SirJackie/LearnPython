@@ -3,6 +3,7 @@ import random
 import time
 import os
 from multiprocessing.managers import BaseManager
+import multiprocessing
 
 TaskQueue = queue.Queue()
 ResultQueue = queue.Queue()
@@ -19,6 +20,8 @@ class QueueManager(BaseManager):
     pass
 
 if __name__ == "__main__":
+    # multiprocessing.freeze_support()
+
     QueueManager.register("GetTaskQueue", callable=TaskQueueReturner)
     QueueManager.register("GetResultQueue", callable=TaskQueueReturner)
 
