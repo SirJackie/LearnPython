@@ -54,4 +54,4 @@ if __name__ == "__main__":
         print("%d time getting : %d" % (i, Result.get(timeout=10)))
 
     manager.shutdown()
-    print('Manager exit.')
+    print('Master exit.')
