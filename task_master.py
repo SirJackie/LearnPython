@@ -1,14 +1,9 @@
-#!/usr/bin/env python3
-# -*- coding: utf-8 -*-
-
-import random, time, queue
+import queue
+import random
 from multiprocessing.managers import BaseManager
 import multiprocessing
-import pickle
 
-# 发送任务的队列:
 task_queue = queue.Queue()
-# 接收结果的队列:
 result_queue = queue.Queue()
 
 def get_task_queue():
@@ -17,7 +12,6 @@ def get_task_queue():
 def get_result_queue():
     return result_queue
 
-# 从BaseManager继承的QueueManager:
 class QueueManager(BaseManager):
     pass
 
