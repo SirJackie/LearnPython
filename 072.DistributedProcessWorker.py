@@ -5,21 +5,17 @@ class QueueManager(BaseManager):
     pass
 
 if __name__ == "__main__":
-    QueueManager.register("GetTaskQueue")
-    QueueManager.register("GetResultQueue")
+    QueueManager.register("get_task_queue")
+    QueueManager.register("get_result_queue")
 
     manager = QueueManager(address=("127.0.0.1", 5000), authkey=b"abc")
-    manager.start()
+    manager.connect()
 
-    Task = manager.GetTaskQueue()
-    Result = manager.GetResultQueue()
+    Task = manager.get_task_queue()
+    Result = manager.get_result_queue()
 
-    while True:
-        try:
-            work = Task.get(timeout=10)
-            Result.put(work)
-        except queue.Empty:
-            print("Worker finished all the works")
-            break
+    for i in range(10):
+        work = Task.get(timeout=10)
+        Result.put(work)
 
-    manager.shutdown()
+    print("Worker finished all the work")
