@@ -129,6 +129,11 @@ class User(Model):
     password = StringField("password")
 
 u = User(id=12345, name='Michael', email='test@orm.org', password='my-pwd')
+# =>  u = dict(id=12345, name='Michael', email='test@orm.org', password='my-pwd')
+# =>  u = {'id': 12345,
+#          'name': 'Michael',
+#          'email': 'test@orm.org',
+#          'password': 'my-pwd'}
 u.save()
 
 
